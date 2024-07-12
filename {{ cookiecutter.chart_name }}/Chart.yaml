@@ -1,9 +1,11 @@
 apiVersion: v2
-description: A Helm chart for Kubernetes
 name: {{ cookiecutter.chart_name }}
+description: A Helm chart for Kubernetes
 type: application
-version: {{ cookiecutter.chart_version }}
+version: 0.1.0
+{% if cookiecutter.dep_chart_name %}
 dependencies:
-  - name: {{ cookiecutter.chart_name }}
-    repository: {{ cookiecutter.chart_repository }}
-    version: {{ cookiecutter.chart_version }}
+  - name: {{ cookiecutter.dep_chart_name }}
+    version: {{ cookiecutter.dep_chart_version }}
+    repository: {{ cookiecutter.dep_chart_repository }}
+{% endif %}

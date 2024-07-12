@@ -1,0 +1,27 @@
+{{- if .Values.deployments }}
+{{- range .Values.deployments }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .name }}
+spec:
+  replicas: {{ .replicaCount | default 1 }}
+  selector:
+    matchLabels:
+      app: {{ .name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .name }}
+    spec:
+      containers:
+        - name: {{ .name }}
+          image: "{{ .image.repository }}:{{ .image.tag }}"
+          imagePullPolicy: {{ .image.pullPolicy | default "IfNotPresent" }}
+          ports:
+            - name: http
+              containerPort: {{ .containerPort | default 80 }}
+              protocol: TCP
+{{- end }}
+{{- end }}

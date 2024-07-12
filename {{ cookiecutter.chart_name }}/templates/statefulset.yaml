@@ -1,0 +1,24 @@
+i{{- if .Values.statefulSets }}
+{{- range .Values.statefulSets }}
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .name }}
+spec:
+  serviceName: {{ .serviceName }}
+  replicas: {{ .replicaCount | default 1 }}
+  selector:
+    matchLabels:
+      app: {{ .name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .name }}
+    spec:
+      containers:
+        - name: {{ .name }}
+          image: "{{ .image.repository }}:{{ .image.tag }}"
+          imagePullPolicy: {{ .image.pullPolicy | default "IfNotPresent" }}
+{{- end }}
+{{- end }}

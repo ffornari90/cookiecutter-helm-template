@@ -1,0 +1,22 @@
+{{- if .Values.daemonSets }}
+{{- range .Values.daemonSets }}
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ .name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .name }}
+    spec:
+      containers:
+        - name: {{ .name }}
+          image: "{{ .image.repository }}:{{ .image.tag }}"
+          imagePullPolicy: {{ .image.pullPolicy | default "IfNotPresent" }}
+{{- end }}
+{{- end }}

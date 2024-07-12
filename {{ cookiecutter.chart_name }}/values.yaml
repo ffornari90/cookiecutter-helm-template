@@ -2,11 +2,164 @@
 # psqlClusterName: home-postgres-cluster
 
 # List of databases to deploy
-databases: []
-  # - name: gitea
-  #   dbName: gitea-test-db
-  # - name: wordpress
-  #   dbName: wordpress-test-db
+databases:
+{% if cookiecutter.include_databases == "yes" %}
+  - name: example-db
+    dbName: example-db
+    psqlClusterName: home-postgres-cluster
+{% else %}
+  []
+  # Uncomment and modify the following example as needed:
+  # - name: example-db
+  #   dbName: example-db
+  #   psqlClusterName: home-postgres-cluster
+{% endif %}
 
-{{ cookiecutter.chart_name }}:
+deployments:
+{% if cookiecutter.include_deployments == "yes" %}
+  - name: example-deployment
+    replicaCount: 1
+    image:
+      repository: {{ cookiecutter.deployment_image_repo }}
+      tag: {{ cookiecutter.deployment_image_tag }}
+    containerPort: 8080
+{% else %}
+  []
+  # Uncomment and modify the following example as needed:
+  # - name: example-deployment
+  #   replicaCount: 1
+  #   image:
+  #     repository: your-registry/example-app
+  #     tag: latest
+  #   containerPort: 8080
+{% endif %}
 
+services:
+{% if cookiecutter.include_services == "yes" %}
+  - name: example-service
+    type: ClusterIP
+    port: 80
+    appSelector: example-deployment
+{% else %}
+  []
+  # Uncomment and modify the following example as needed:
+  # - name: example-service
+  #   type: ClusterIP
+  #   port: 80
+  #   appSelector: example-deployment
+{% endif %}
+
+ingresses:
+{% if cookiecutter.include_ingresses == "yes" %}
+  - name: example-ingress
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-cloudflare
+    host: example.theramirez.casa
+    serviceName: example-service
+    servicePort: 80
+    tls: true
+    tlsSecretName: example-tls
+{% else %}
+  []
+  # Uncomment and modify the following example as needed:
+  # - name: example-ingress
+  #   annotations:
+  #     cert-manager.io/cluster-issuer: letsencrypt-cloudflare
+  #   host: example.theramirez.casa
+  #   serviceName: example-service
+  #   servicePort: 80
+  #   tls: true
+  #   tlsSecretName: example-tls
+{% endif %}
+
+configMaps:
+{% if cookiecutter.include_configmaps == "yes" %}
+  - name: example-config
+    data:
+      APP_CONFIG: |
+        key1: value1
+        key2: value2
+{% else %}
+  []
+  # Uncomment and modify the following example as needed:
+  # - name: example-config
+  #   data:
+  #     APP_CONFIG: |
+  #       key1: value1
+  #       key2: value2
+{% endif %}
+
+statefulSets:
+{% if cookiecutter.include_statefulsets == "yes" %}
+  - name: example-statefulset
+    serviceName: example-statefulset-svc
+    replicaCount: 1
+    image:
+      repository: {{ cookiecutter.statefulset_image_repo }}
+      tag: {{ cookiecutter.statefulset_image_tag }}
+{% else %}
+  []
+  # Uncomment and modify the following example as needed:
+  # - name: example-statefulset
+  #   serviceName: example-statefulset-svc
+  #   replicaCount: 1
+  #   image:
+  #     repository: your-registry/example-stateful-app
+  #     tag: latest
+{% endif %}
+
+daemonSets:
+{% if cookiecutter.include_daemonsets == "yes" %}
+  - name: example-daemonset
+    image:
+      repository: {{ cookiecutter.daemonset_image_repo }}
+      tag: {{ cookiecutter.daemonset_image_tag }}
+{% else %}
+  []
+  # Uncomment and modify the following example as needed:
+  # - name: example-daemonset
+  #   image:
+  #     repository: your-registry/example-daemon-app
+  #     tag: latest
+{% endif %}
+
+jobs:
+{% if cookiecutter.include_jobs == "yes" %}
+  - name: example-job
+    image:
+      repository: {{ cookiecutter.job_image_repo }}
+      tag: {{ cookiecutter.job_image_tag }}
+    restartPolicy: OnFailure
+{% else %}
+  []
+  # Uncomment and modify the following example as needed:
+  # - name: example-job
+  #   image:
+  #     repository: your-registry/example-job-app
+  #     tag: latest
+  #   restartPolicy: OnFailure
+{% endif %}
+
+cronJobs:
+{% if cookiecutter.include_cronjobs == "yes" %}
+  - name: example-cronjob
+    schedule: "0 * * * *"
+    image:
+      repository: {{ cookiecutter.cronjob_image_repo }}
+      tag: {{ cookiecutter.cronjob_image_tag }}
+    restartPolicy: OnFailure
+{% else %}
+  []
+  # Uncomment and modify the following example as needed:
+  # - name: example-cronjob
+  #   schedule: "0 * * * *"
+  #   image:
+  #     repository: your-registry/example-cron-app
+  #     tag: latest
+  #   restartPolicy: OnFailure
+{% endif %}
+
+{% if cookiecutter.dep_chart_name %}
+{{ cookiecutter.dep_chart_name }}:
+  # Values for the dependency chart will be populated here
+{% endif %}
