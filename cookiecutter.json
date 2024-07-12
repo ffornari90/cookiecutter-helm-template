@@ -4,10 +4,15 @@
     "yes",
     "no"
   ],
+  "dep_chart_name": "{{ cookiecutter.need_dep_chart == 'yes' and 'my-dependency' or '' }}",
+  "dep_chart_version": "{{ cookiecutter.need_dep_chart == 'yes' and '1.0.0' or '' }}",
+  "dep_chart_repository": "{{ cookiecutter.need_dep_chart == 'yes' and 'https://charts.example.com' or '' }}",
   "include_deployment": [
     "yes",
     "no"
   ],
+  "deployment_image_repo": "{{ cookiecutter.include_deployment == 'yes' and 'my-repo' or '' }}",
+  "deployment_image_tag": "{{ cookiecutter.include_deployment == 'yes' and 'latest' or '' }}",
   "include_service": [
     "yes",
     "no"
