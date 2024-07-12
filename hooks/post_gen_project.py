@@ -1,25 +1,28 @@
-import os
-import yaml
+import json
 
-def update_values_yaml():
-    values_file_path = os.path.join("{{ cookiecutter.chart_name }}", "values.yaml")
-    
-    with open(values_file_path, 'r') as file:
-        values = yaml.safe_load(file)
+def main():
+    # Load the initial context
+    context = json.loads('{{ cookiecutter | jsonify }}')
 
-    # Always keep all resource types, but as empty lists
-    resource_types = ['deployments', 'services', 'ingresses', 'configMaps', 'databases', 'statefulSets', 'daemonSets', 'jobs', 'cronJobs']
-    
-    for resource_type in resource_types:
-        if resource_type not in values:
-            values[resource_type] = []
+    # Conditional logic for dependency chart
+    if context['need_dep_chart'] == 'yes':
+        context['dep_chart_name'] = input("Name of the dependency chart: ").strip()
+        context['dep_chart_version'] = input("Version of the dependency chart: ").strip()
+        context['dep_chart_repository'] = input("Repository of the dependency chart: ").strip()
+    else:
+        context['dep_chart_name'] = ""
+        context['dep_chart_version'] = ""
+        context['dep_chart_repository'] = ""
 
-    # Remove dependency chart section if not needed
-    if "{{ cookiecutter.need_dep_chart }}" == "no" and "{{ cookiecutter.dep_chart_name }}" in values:
-        del values["{{ cookiecutter.dep_chart_name }}"]
+    # Conditional logic for deployment
+    if context['include_deployment'] == 'yes':
+        context['deployment_image_repo'] = input("Docker image repository for the deployment: ").strip()
+        context['deployment_image_tag'] = input("Docker image tag for the deployment: ").strip()
+    else:
+        context['deployment_image_repo'] = ""
+        context['deployment_image_tag'] = ""
 
-    with open(values_file_path, 'w') as file:
-        yaml.dump(values, file, default_flow_style=False)
+    # Save the updated context to a file
+    with open('cookiecutter_context.json', 'w') as f:
+        json.dump(context, f)
 
-if __name__ == "__main__":
-    update_values_yaml()
