@@ -4,15 +4,15 @@
     "yes",
     "no"
   ],
-  "dep_chart_name": "{% if cookiecutter.need_dep_chart == 'yes' %}dependency-chart{% endif %}",
-  "dep_chart_version": "{% if cookiecutter.need_dep_chart == 'yes' %}0.1.0{% endif %}",
-  "dep_chart_repository": "{% if cookiecutter.need_dep_chart == 'yes' %}https://charts.example.com{% endif %}",
+  "dep_chart_name": "",
+  "dep_chart_version": "",
+  "dep_chart_repository": "",
   "include_deployment": [
     "yes",
     "no"
   ],
-  "deployment_image_repo": "{% if cookiecutter.include_deployment == 'yes' %}nginx{% endif %}",
-  "deployment_image_tag": "{% if cookiecutter.include_deployment == 'yes' %}latest{% endif %}",
+  "deployment_image_repo": "",
+  "deployment_image_tag": "",
   "include_service": [
     "yes",
     "no"
@@ -34,19 +34,5 @@
     "cookiecutter.extensions.UUIDExtension",
     "cookiecutter.extensions.TimeExtension",
     "cookiecutter.extensions.RandomStringExtension"
-  ],
-  "__prompts__": {
-    "chart_name": "Name of your Helm chart",
-    "need_dep_chart": "Do you need a dependency chart? (yes/no)",
-    "dep_chart_name": "{% if cookiecutter.need_dep_chart == 'yes' %}Name of the dependency chart{% endif %}",
-    "dep_chart_version": "{% if cookiecutter.need_dep_chart == 'yes' %}Version of the dependency chart{% endif %}",
-    "dep_chart_repository": "{% if cookiecutter.need_dep_chart == 'yes' %}Repository of the dependency chart{% endif %}",
-    "include_deployment": "Do you want to include a deployment? (yes/no)",
-    "deployment_image_repo": "{% if cookiecutter.include_deployment == 'yes' %}Docker image repository for the deployment{% endif %}",
-    "deployment_image_tag": "{% if cookiecutter.include_deployment == 'yes' %}Docker image tag for the deployment{% endif %}",
-    "include_service": "Do you want to include a service? (yes/no)",
-    "include_ingress": "Do you want to include an ingress? (yes/no)",
-    "include_configmap": "Do you want to include a configmap? (yes/no)",
-    "include_database": "Do you want to include a database? (yes/no)"
-  }
+  ]
 }
