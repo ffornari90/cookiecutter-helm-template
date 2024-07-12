@@ -4,15 +4,10 @@
     "yes",
     "no"
   ],
-  "dep_chart_name": "",
-  "dep_chart_version": "",
-  "dep_chart_repository": "",
   "include_deployment": [
     "yes",
     "no"
   ],
-  "deployment_image_repo": "",
-  "deployment_image_tag": "",
   "include_service": [
     "yes",
     "no"
