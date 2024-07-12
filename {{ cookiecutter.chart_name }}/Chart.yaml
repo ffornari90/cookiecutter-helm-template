@@ -3,7 +3,7 @@ name: {{ cookiecutter.chart_name }}
 description: A Helm chart for Kubernetes
 type: application
 version: 0.1.0
-{% if cookiecutter.dep_chart_name %}
+{% if cookiecutter.need_dep_chart == 'yes' %}
 dependencies:
   - name: {{ cookiecutter.dep_chart_name }}
     version: {{ cookiecutter.dep_chart_version }}

@@ -8,11 +8,10 @@
   "dep_chart_version": "{% if cookiecutter.need_dep_chart == 'yes' %}0.1.0{% endif %}",
   "dep_chart_repository": "{% if cookiecutter.need_dep_chart == 'yes' %}https://charts.example.com{% endif %}",
   "__prompts__": {
-    "setup_type": "Choose setup type (default/custom)",
     "chart_name": "Name of your Helm chart",
     "need_dep_chart": "Do you need a dependency chart? (yes/no)",
-    "dep_chart_name": "Name of the dependency chart",
-    "dep_chart_version": "Version of the dependency chart",
-    "dep_chart_repository": "Repository of the dependency chart"
+    "dep_chart_name": "{% if cookiecutter.need_dep_chart == 'yes' %}Name of the dependency chart{% endif %}",
+    "dep_chart_version": "{% if cookiecutter.need_dep_chart == 'yes' %}Version of the dependency chart{% endif %}",
+    "dep_chart_repository": "{% if cookiecutter.need_dep_chart == 'yes' %}Repository of the dependency chart{% endif %}"
   }
 }
