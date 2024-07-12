@@ -1,8 +1,4 @@
 {
-  "setup_type": [
-    "default",
-    "custom"
-  ],
   "chart_name": "my-chart",
   "need_dep_chart": [
     "yes",
