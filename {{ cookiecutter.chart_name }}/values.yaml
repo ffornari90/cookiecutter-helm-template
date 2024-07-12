@@ -1,75 +1,82 @@
-# Default configurations
-deployment:
-  image:
-    repository: {{ cookiecutter.deployment_image_repo }}
-    tag: {{ cookiecutter.deployment_image_tag }}
-  replicaCount: 1
+# Deployments
+deployments: []
+  # - name: example-deployment
+  #   replicaCount: 1
+  #   image:
+  #     repository: your-registry/example-app
+  #     tag: latest
+  #     pullPolicy: IfNotPresent
+  #   containerPort: 80
 
-service:
-  type: ClusterIP
-  port: 80
+# Services
+services: []
+  # - name: example-service
+  #   type: ClusterIP
+  #   port: 80
+  #   selector: example-deployment
 
-ingress:
-  enabled: true
-  host: example.theramirez.casa
-  tls: true
-  tlsSecretName: example-tls
+# Ingresses
+ingresses: []
+  # - name: example-ingress
+  #   annotations:
+  #     kubernetes.io/ingress.class: nginx
+  #   host: chart-example.local
+  #   serviceName: example-service
+  #   servicePort: 80
+  #   path: /
+  #   pathType: Prefix
+  #   tls: false
+  #   tlsSecretName: chart-example-tls
 
-# Additional resources (uncomment and modify as needed)
-{% if 'databases' in cookiecutter.additional_resources.split(',') or cookiecutter.include_databases == "yes" %}
-databases:
-  - name: example-db
-    dbName: example-db
-    psqlClusterName: home-postgres-cluster
-{% endif %}
+# ConfigMaps
+configMaps: []
+  # - name: example-config
+  #   data:
+  #     APP_CONFIG: |
+  #       key1: value1
+  #       key2: value2
 
-{% if 'configmaps' in cookiecutter.additional_resources.split(',') or cookiecutter.include_configmaps == "yes" %}
-configMaps:
-  - name: example-config
-    data:
-      APP_CONFIG: |
-        key1: value1
-        key2: value2
-{% endif %}
+# Databases
+databases: []
+  # - name: example-db
+  #   dbName: example-db
+  #   psqlClusterName: home-postgres-cluster
+  #   allowConnections: true
 
-{% if 'statefulsets' in cookiecutter.additional_resources.split(',') or cookiecutter.include_statefulsets == "yes" %}
-statefulSets:
-  - name: example-statefulset
-    serviceName: example-statefulset-svc
-    replicaCount: 1
-    image:
-      repository: your-registry/example-stateful-app
-      tag: latest
-{% endif %}
+# StatefulSets
+statefulSets: []
+  # - name: example-statefulset
+  #   serviceName: example-statefulset-svc
+  #   replicaCount: 1
+  #   image:
+  #     repository: your-registry/example-stateful-app
+  #     tag: latest
 
-{% if 'daemonsets' in cookiecutter.additional_resources.split(',') or cookiecutter.include_daemonsets == "yes" %}
-daemonSets:
-  - name: example-daemonset
-    image:
-      repository: your-registry/example-daemon-app
-      tag: latest
-{% endif %}
+# DaemonSets
+daemonSets: []
+  # - name: example-daemonset
+  #   image:
+  #     repository: your-registry/example-daemon-app
+  #     tag: latest
 
-{% if 'jobs' in cookiecutter.additional_resources.split(',') or cookiecutter.include_jobs == "yes" %}
-jobs:
-  - name: example-job
-    image:
-      repository: your-registry/example-job-app
-      tag: latest
-    restartPolicy: OnFailure
-{% endif %}
+# Jobs
+jobs: []
+  # - name: example-job
+  #   image:
+  #     repository: your-registry/example-job-app
+  #     tag: latest
+  #   restartPolicy: OnFailure
 
-{% if 'cronjobs' in cookiecutter.additional_resources.split(',') or cookiecutter.include_cronjobs == "yes" %}
-cronJobs:
-  - name: example-cronjob
-    schedule: "0 * * * *"
-    image:
-      repository: your-registry/example-cron-app
-      tag: latest
-    restartPolicy: OnFailure
-{% endif %}
+# CronJobs
+cronJobs: []
+  # - name: example-cronjob
+  #   schedule: "0 * * * *"
+  #   image:
+  #     repository: your-registry/example-cron-app
+  #     tag: latest
+  #   restartPolicy: OnFailure
 
-{% if cookiecutter.dep_chart_name %}
+{% if cookiecutter.need_dep_chart == 'yes' %}
 {{ cookiecutter.dep_chart_name }}:
   # Values for the dependency chart will be populated here
 {% endif %}
