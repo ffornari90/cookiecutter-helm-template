@@ -1,77 +1,41 @@
 {
+  "setup_type": [
+    "default",
+    "custom"
+  ],
   "chart_name": "my-chart",
   "dep_chart_name": "",
   "dep_chart_version": "",
   "dep_chart_repository": "",
-  "include_databases": [
-    "yes",
-    "no"
-  ],
-  "include_deployments": [
-    "yes",
-    "no"
-  ],
-  "deployment_image_repo": "{% if cookiecutter.include_deployments == 'yes' %}your-registry/example-app{% endif %}",
-  "deployment_image_tag": "{% if cookiecutter.include_deployments == 'yes' %}latest{% endif %}",
-  "include_services": [
-    "yes",
-    "no"
-  ],
-  "include_ingresses": [
-    "yes",
-    "no"
-  ],
-  "include_configmaps": [
-    "yes",
-    "no"
-  ],
-  "include_statefulsets": [
-    "yes",
-    "no"
-  ],
-  "statefulset_image_repo": "{% if cookiecutter.include_statefulsets == 'yes' %}your-registry/example-stateful-app{% endif %}",
-  "statefulset_image_tag": "{% if cookiecutter.include_statefulsets == 'yes' %}latest{% endif %}",
-  "include_daemonsets": [
-    "yes",
-    "no"
-  ],
-  "daemonset_image_repo": "{% if cookiecutter.include_daemonsets == 'yes' %}your-registry/example-daemon-app{% endif %}",
-  "daemonset_image_tag": "{% if cookiecutter.include_daemonsets == 'yes' %}latest{% endif %}",
-  "include_jobs": [
-    "yes",
-    "no"
-  ],
-  "job_image_repo": "{% if cookiecutter.include_jobs == 'yes' %}your-registry/example-job-app{% endif %}",
-  "job_image_tag": "{% if cookiecutter.include_jobs == 'yes' %}latest{% endif %}",
-  "include_cronjobs": [
-    "yes",
-    "no"
-  ],
-  "cronjob_image_repo": "{% if cookiecutter.include_cronjobs == 'yes' %}your-registry/example-cron-app{% endif %}",
-  "cronjob_image_tag": "{% if cookiecutter.include_cronjobs == 'yes' %}latest{% endif %}",
+  "deployment_image_repo": "{% if cookiecutter.setup_type == 'default' %}your-registry/example-app{% endif %}",
+  "deployment_image_tag": "{% if cookiecutter.setup_type == 'default' %}latest{% endif %}",
+  "additional_resources": "{% if cookiecutter.setup_type == 'default' %}[]{% endif %}",
+  "include_databases": "{% if cookiecutter.setup_type == 'custom' %}no{% endif %}",
+  "include_deployments": "{% if cookiecutter.setup_type == 'custom' %}no{% endif %}",
+  "include_services": "{% if cookiecutter.setup_type == 'custom' %}no{% endif %}",
+  "include_ingresses": "{% if cookiecutter.setup_type == 'custom' %}no{% endif %}",
+  "include_configmaps": "{% if cookiecutter.setup_type == 'custom' %}no{% endif %}",
+  "include_statefulsets": "{% if cookiecutter.setup_type == 'custom' %}no{% endif %}",
+  "include_daemonsets": "{% if cookiecutter.setup_type == 'custom' %}no{% endif %}",
+  "include_jobs": "{% if cookiecutter.setup_type == 'custom' %}no{% endif %}",
+  "include_cronjobs": "{% if cookiecutter.setup_type == 'custom' %}no{% endif %}",
   "__prompts__": {
+    "setup_type": "Choose setup type (default/custom)",
     "chart_name": "Name of your Helm chart",
     "dep_chart_name": "Name of the dependency chart you want to install (leave empty if none)",
     "dep_chart_version": "Version of the dependency chart you want to install (leave empty if none)",
     "dep_chart_repository": "Repository of the dependency chart you want to install (leave empty if none)",
+    "deployment_image_repo": "Image repository for deployment",
+    "deployment_image_tag": "Image tag for deployment",
+    "additional_resources": "Additional resources to include (comma-separated list from: databases,configmaps,statefulsets,daemonsets,jobs,cronjobs)",
     "include_databases": "Include example database configuration? (yes/no)",
     "include_deployments": "Include example deployment configuration? (yes/no)",
-    "deployment_image_repo": "Image repository for deployment (if included)",
-    "deployment_image_tag": "Image tag for deployment (if included)",
     "include_services": "Include example service configuration? (yes/no)",
     "include_ingresses": "Include example ingress configuration? (yes/no)",
     "include_configmaps": "Include example configmap configuration? (yes/no)",
     "include_statefulsets": "Include example statefulset configuration? (yes/no)",
-    "statefulset_image_repo": "Image repository for statefulset (if included)",
-    "statefulset_image_tag": "Image tag for statefulset (if included)",
     "include_daemonsets": "Include example daemonset configuration? (yes/no)",
-    "daemonset_image_repo": "Image repository for daemonset (if included)",
-    "daemonset_image_tag": "Image tag for daemonset (if included)",
     "include_jobs": "Include example job configuration? (yes/no)",
-    "job_image_repo": "Image repository for job (if included)",
-    "job_image_tag": "Image tag for job (if included)",
-    "include_cronjobs": "Include example cronjob configuration? (yes/no)",
-    "cronjob_image_repo": "Image repository for cronjob (if included)",
-    "cronjob_image_tag": "Image tag for cronjob (if included)"
+    "include_cronjobs": "Include example cronjob configuration? (yes/no)"
   }
 }
