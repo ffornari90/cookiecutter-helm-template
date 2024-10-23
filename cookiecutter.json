@@ -34,5 +34,8 @@
     "cookiecutter.extensions.UUIDExtension",
     "cookiecutter.extensions.TimeExtension",
     "cookiecutter.extensions.RandomStringExtension"
+  ],
+  "_copy_without_render": [
+    "templates/*"
   ]
 }
