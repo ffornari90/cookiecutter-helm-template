@@ -7,7 +7,10 @@ def prompt_user(question, default=None):
 
 def main():
     # Load the initial context
-    context = json.loads('{{ cookiecutter | jsonify }}')
+    context_str = r"""
+    {{ cookiecutter | jsonify }}
+    """
+    context = json.loads(context_str)
 
     # Conditional logic for dependency chart
     if context['need_dep_chart'] == 'yes':
