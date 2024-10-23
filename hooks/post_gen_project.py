@@ -1,9 +1,39 @@
 import json
+import yaml
 
-def prompt_user(question, default=None):
-    """ Helper function to prompt the user and return the input or default value. """
-    response = input(f"{question} {'(' + default + ')' if default else ''}: ").strip()
-    return response if response else default
+def update_values_yaml(context):
+    """ Function to update the values.yaml file with the provided context. """
+    # Load the existing values.yaml file
+    with open('values.yaml', 'r') as file:
+        values = yaml.safe_load(file)
+
+    # Update deployments section if 'include_deployment' is 'yes'
+    if context['include_deployment'] == 'yes':
+        deployment = {
+            "name": context['deployment_image_repo'].split('/')[-1],
+            "replicaCount": 1,
+            "image": {
+                "repository": context['deployment_image_repo'],
+                "tag": context['deployment_image_tag'],
+                "pullPolicy": "IfNotPresent"
+            },
+            "containerPort": 80
+        }
+        values['deployments'].append(deployment)
+
+    # If a dependency chart is needed, populate the chart information
+    if context['need_dep_chart'] == 'yes':
+        dep_chart = {
+            context['dep_chart_name']: {
+                "repository": context['dep_chart_repository'],
+                "version": context['dep_chart_version']
+            }
+        }
+        values.update(dep_chart)
+
+    # Save the updated values.yaml file
+    with open('values.yaml', 'w') as file:
+        yaml.dump(values, file, default_flow_style=False)
 
 def main():
     # Load the initial context
@@ -12,27 +42,8 @@ def main():
     """
     context = json.loads(context_str)
 
-    # Conditional logic for dependency chart
-    if context['need_dep_chart'] == 'yes':
-        context['dep_chart_name'] = prompt_user("Name of the dependency chart", "dependency-chart")
-        context['dep_chart_version'] = prompt_user("Version of the dependency chart", "0.1.0")
-        context['dep_chart_repository'] = prompt_user("Repository of the dependency chart", "https://charts.example.com")
-    else:
-        context['dep_chart_name'] = ""
-        context['dep_chart_version'] = ""
-        context['dep_chart_repository'] = ""
-
-    # Conditional logic for deployment
-    if context['include_deployment'] == 'yes':
-        context['deployment_image_repo'] = prompt_user("Docker image repository for the deployment", "nginx")
-        context['deployment_image_tag'] = prompt_user("Docker image tag for the deployment", "latest")
-    else:
-        context['deployment_image_repo'] = ""
-        context['deployment_image_tag'] = ""
-
-    # Save the updated context to a file for debugging purposes (optional)
-    with open('cookiecutter_context.json', 'w') as f:
-        json.dump(context, f, indent=4)
+    # Update the values.yaml file with the provided context
+    update_values_yaml(context)
 
 if __name__ == "__main__":
     main()
