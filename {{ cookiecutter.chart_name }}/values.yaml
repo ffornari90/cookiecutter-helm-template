@@ -76,8 +76,8 @@ cronJobs: []
   #     tag: latest
   #   restartPolicy: OnFailure
 
-# ExternalSecrets
-externalSecrets: []
+# ExternalS3Secrets
+externalS3Secrets: []
 
 {% if cookiecutter.need_dep_chart == 'yes' %}
 {{ cookiecutter.dep_chart_name }}:
