@@ -35,24 +35,23 @@
     "yes",
     "no"
   ],
-  "external_secrets": [
-    {
-      "name": "example-external-secret",
-      "k8s_secret_name": "example-kubernetes-secret",
-      "secret_data": [
-        {
-          "secret_key": "example-key-1",
-          "vault_secret_key": "vault/secret/data/path-1",
-          "vault_secret_property": "secret-property-1"
-        },
-        {
-          "secret_key": "example-key-2",
-          "vault_secret_key": "vault/secret/data/path-2",
-          "vault_secret_property": "secret-property-2"
-        }
-      ]
-    }
-  ],
+  "external_secret":
+  {
+    "name": "example-external-secret",
+    "k8s_secret_name": "example-kubernetes-secret",
+    "secret_data": [
+      {
+        "secret_key": "example-key-1",
+        "vault_secret_key": "vault/secret/data/path-1",
+        "vault_secret_property": "secret-property-1"
+      },
+      {
+        "secret_key": "example-key-2",
+        "vault_secret_key": "vault/secret/data/path-2",
+        "vault_secret_property": "secret-property-2"
+      }
+    ]
+  },
   "_extensions": [
     "cookiecutter.extensions.SlugifyExtension",
     "cookiecutter.extensions.UUIDExtension",

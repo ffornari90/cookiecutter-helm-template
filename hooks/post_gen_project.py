@@ -119,28 +119,24 @@ def update_values_yaml(context):
         }
         values['statefulSets'].append(statefulset)
 
-    # Add external secrets
-    if context.get('external_secrets'):
-        if 'externalSecrets' not in values:
-            values['externalSecrets'] = []
-        print(context['external_secrets'])
-        for secret in context['external_secrets']:
-            external_secret = {
-                "name": secret['name'],
-                "target": {
-                    "name": secret['k8s_secret_name']
-                },
-                "data": [
-                    {
-                        "secretKey": entry['secret_key'],
-                        "remoteRef": {
-                            "key": entry['vault_secret_key'],
-                            "property": entry['vault_secret_property']
-                        }
-                    } for entry in secret['secret_data']
-                ]
-            }
-            values['externalSecrets'].append(external_secret)
+    # Update external_secrets section if 'include_external_secret' is 'yes'
+    if context.get('include_external_secret') == 'yes':
+        external_secret = {
+            "name": context.get('name', 'example-external-secret'),
+            "target": {
+                "name": context.get('k8s_secret_name', 'example-kubernetes-secret')
+            },
+            "data": [
+                {
+                    "secretKey": entry['secret_key'],
+                    "remoteRef": {
+                        "key": entry['vault_secret_key'],
+                        "property": entry['vault_secret_property']
+                    }
+                } for entry in context.get('secret_data')
+            ]
+        }
+        values['externalSecrets'].append(external_secret)
 
     # If a dependency chart is needed, populate the chart information
     if context['need_dep_chart'] == 'yes':
