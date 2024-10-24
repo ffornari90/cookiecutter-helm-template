@@ -133,7 +133,7 @@ def update_values_yaml(context):
                         "key": entry['vault_secret_key'],
                         "property": entry['vault_secret_property']
                     }
-                } for entry in context.get('secret_data', [])
+                } for entry in context.get('secret_data', [{"secret_key": "example-key-1","vault_secret_key": "vault/secret/data/path-1","vault_secret_property": "secret-property-1"},{"secret_key": "example-key-2","vault_secret_key": "vault/secret/data/path-2","vault_secret_property": "secret-property-2"}])
             ]
         }
         values['externalSecrets'].append(external_secret)
@@ -150,7 +150,7 @@ def update_values_yaml(context):
 
     # Save the updated values.yaml file
     with open('values.yaml', 'w') as file:
-        yaml.dump(values, file, default_flow_style=False, indent=2)
+        yaml.dump(values, file, default_flow_style=False)
 
 def main():
     # Load the initial context

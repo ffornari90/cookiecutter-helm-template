@@ -39,7 +39,8 @@
   {
     "name": "example-external-secret",
     "k8s_secret_name": "example-kubernetes-secret",
-    "secret_data": [
+    "secret_data":
+    [
       {
         "secret_key": "example-key-1",
         "vault_secret_key": "vault/secret/data/path-1",
