@@ -119,6 +119,28 @@ def update_values_yaml(context):
         }
         values['statefulSets'].append(statefulset)
 
+    # Add external secrets
+    if context.get('external_secrets'):
+        if 'externalSecrets' not in values:
+            values['externalSecrets'] = []
+        for secret in context['external_secrets']:
+            external_secret = {
+                "name": secret['name'],
+                "target": {
+                    "name": secret['k8s_secret_name']
+                },
+                "data": [
+                    {
+                        "secretKey": entry['secret_key'],
+                        "remoteRef": {
+                            "key": entry['vault_secret_key'],
+                            "property": entry['vault_secret_property']
+                        }
+                    } for entry in secret['secret_data']
+                ]
+            }
+            values['externalSecrets'].append(external_secret)
+
     # If a dependency chart is needed, populate the chart information
     if context['need_dep_chart'] == 'yes':
         dep_chart = {
