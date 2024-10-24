@@ -16,6 +16,10 @@ spec:
         app: {{ .name }}
     spec:
       containers:
+      - env:
+        - secretRef:
+            name: "{{ .s3Secret }}"
+            optional: false
         - name: {{ .name }}
           image: "{{ .image.repository }}:{{ .image.tag }}"
           imagePullPolicy: {{ .image.pullPolicy | default "IfNotPresent" }}
@@ -23,5 +27,7 @@ spec:
             - name: http
               containerPort: {{ .containerPort | default 80 }}
               protocol: TCP
+      imagePullSecrets:
+      - name: "{{ .image.pullSecret }}"
 {{- end }}
 {{- end }}

@@ -11,11 +11,13 @@ def update_values_yaml(context):
     if context['include_deployment'] == 'yes':
         deployment = {
             "name": context['chart_name'],
+            "s3Secret": context['deployment_s3_secret'],
             "replicaCount": 1,
             "image": {
                 "repository": context['deployment_image_repo'],
                 "tag": context['deployment_image_tag'],
-                "pullPolicy": "IfNotPresent"
+                "pullPolicy": "IfNotPresent",
+                "pullSecret": context['deployment_image_secret']
             },
             "containerPort": 80
         }
