@@ -122,7 +122,7 @@ def update_values_yaml(context):
     # Update external_s3_secrets section if 'include_external_s3_secret' is 'yes'
     if context.get('include_external_s3_secret') == 'yes':
         external_s3_secret = {
-            "name": context.get('external_secret_s3_name', 'example-external-s3-secret'),
+            "name": context.get('external_s3_secret_name', 'example-external-s3-secret'),
             "target": {
                 "name": context.get('k8s_s3_secret_name', 'example-kubernetes-s3-secret')
             },
