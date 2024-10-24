@@ -10,7 +10,7 @@ def update_values_yaml(context):
     # Update deployments section if 'include_deployment' is 'yes'
     if context['include_deployment'] == 'yes':
         deployment = {
-            "name": context['deployment_image_repo'].split('/')[-1],
+            "name": context['chart_name'],
             "replicaCount": 1,
             "image": {
                 "repository": context['deployment_image_repo'],
@@ -24,10 +24,10 @@ def update_values_yaml(context):
     # Update services section if 'include_service' is 'yes'
     if context.get('include_service') == 'yes':
         service = {
-            "name": context.get('service_name', 'example-service'),
+            "name": context['chart_name'],
             "type": context.get('service_type', 'ClusterIP'),
             "port": context.get('service_port', 80),
-            "selector": context['deployment_image_repo'].split('/')[-1] if context['include_deployment'] == 'yes' else "app"
+            "selector": context['chart_name'] if context['include_deployment'] == 'yes' else "app"
         }
         values['services'].append(service)
 
