@@ -133,7 +133,7 @@ def update_values_yaml(context):
                         "key": entry['vault_secret_key'],
                         "property": entry['vault_secret_property']
                     }
-                } for entry in context.get('secret_data')
+                } for entry in context.get('secret_data', [])
             ]
         }
         values['externalSecrets'].append(external_secret)
