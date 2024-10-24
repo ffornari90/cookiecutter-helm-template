@@ -122,9 +122,9 @@ def update_values_yaml(context):
     # Update external_secrets section if 'include_external_secret' is 'yes'
     if context.get('include_external_secret') == 'yes':
         external_secret = {
-            "name": context.get('name', 'example-external-secret'),
+            "name": context.get('external_secret_name', 'example-external-secret'),
             "target": {
-                "name": context.get('k8s_secret_name', 'example-kubernetes-secret')
+                "name": context.get('external_secret_k8s_secret_name', 'example-kubernetes-secret')
             },
             "data": [
                 {
@@ -133,7 +133,7 @@ def update_values_yaml(context):
                         "key": entry['vault_secret_key'],
                         "property": entry['vault_secret_property']
                     }
-                } for entry in context.get('secret_data', [{"secret_key": "example-key-1","vault_secret_key": "vault/secret/data/path-1","vault_secret_property": "secret-property-1"},{"secret_key": "example-key-2","vault_secret_key": "vault/secret/data/path-2","vault_secret_property": "secret-property-2"}])
+                } for entry in context.get('external_secret_secret_data', [{"secret_key": "example-key-1","vault_secret_key": "vault/secret/data/path-1","vault_secret_property": "secret-property-1"},{"secret_key": "example-key-2","vault_secret_key": "vault/secret/data/path-2","vault_secret_property": "secret-property-2"}])
             ]
         }
         values['externalSecrets'].append(external_secret)
