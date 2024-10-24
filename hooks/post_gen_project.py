@@ -133,7 +133,7 @@ def update_values_yaml(context):
                         "key": entry['vault_secret_key'],
                         "property": entry['vault_secret_property']
                     }
-                } for entry in context.get('external_secret_data', [{"secret_key": "example-key-1","vault_secret_key": "vault/secret/data/path-1","vault_secret_property": "secret-property-1"},{"secret_key": "example-key-2","vault_secret_key": "vault/secret/data/path-2","vault_secret_property": "secret-property-2"}])
+                } for entry in context.get('external_secret_data', {"data":[{"secret_key": "example-key-1","vault_secret_key": "vault/secret/data/path-1","vault_secret_property": "secret-property-1"},{"secret_key": "example-key-2","vault_secret_key": "vault/secret/data/path-2","vault_secret_property": "secret-property-2"}]})
             ]
         }
         values['externalSecrets'].append(external_secret)
