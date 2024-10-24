@@ -131,7 +131,7 @@ def update_values_yaml(context):
 
     # Save the updated values.yaml file
     with open('values.yaml', 'w') as file:
-        yaml.dump(values, file, default_flow_style=False)
+        yaml.dump(values, file, default_flow_style=False, indent=2)
 
 def main():
     # Load the initial context
