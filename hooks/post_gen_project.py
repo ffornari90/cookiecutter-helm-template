@@ -121,6 +121,7 @@ def update_values_yaml(context):
 
     # Update external_secrets section if 'include_external_secret' is 'yes'
     if context.get('include_external_secret') == 'yes':
+        print(context.get('external_secret_data', {"data":[{"secret_key": "example-key-1","vault_secret_key": "vault/secret/data/path-1","vault_secret_property": "secret-property-1"},{"secret_key": "example-key-2","vault_secret_key": "vault/secret/data/path-2","vault_secret_property": "secret-property-2"}]}))
         external_secret = {
             "name": context.get('external_secret_name', 'example-external-secret'),
             "target": {
