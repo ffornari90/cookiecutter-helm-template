@@ -123,8 +123,8 @@ def update_values_yaml(context):
     if context.get('external_secrets'):
         if 'externalSecrets' not in values:
             values['externalSecrets'] = []
+        print(context['external_secrets'])
         for secret in context['external_secrets']:
-            print(secret)
             external_secret = {
                 "name": secret['name'],
                 "target": {
