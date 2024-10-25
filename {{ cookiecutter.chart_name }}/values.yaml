@@ -82,6 +82,9 @@ externalS3Secrets: []
 # ExternalRegistrySecrets
 externalRegistrySecrets: []
 
+# ExternalGitlabSecrets
+externalGitlabSecrets: []
+
 {% if cookiecutter.need_dep_chart == 'yes' %}
 {{ cookiecutter.dep_chart_name }}:
   # Values for the dependency chart will be populated here

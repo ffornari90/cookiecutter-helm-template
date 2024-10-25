@@ -45,6 +45,13 @@
   "external_registry_secret_name": "registry-secret",
   "k8s_registry_secret_name": "registry-secret",
   "external_registry_secret_data":  "{{ cookiecutter.include_external_registry_secret == 'yes' and '{\"data\":[{\"secret_key\": \"example-key-1\",\"vault_secret_key\": \"vault/secret/data/path-1\",\"vault_secret_property\": \"secret-property-1\"},{\"secret_key\": \"example-key-2\",\"vault_secret_key\": \"vault/secret/data/path-2\",\"vault_secret_property\": \"secret-property-2\"}]}' or '' }}",
+  "include_external_gitlab_secret": [
+    "yes",
+    "no"
+  ],
+  "external_gitlab_secret_name": "gitlab-secret",
+  "k8s_gitlab_secret_name": "gitlab-secret",
+  "external_gitlab_secret_data":  "{{ cookiecutter.include_external_gitlab_secret == 'yes' and '{\"data\":[{\"secret_key\": \"example-key-1\",\"vault_secret_key\": \"vault/secret/data/path-1\",\"vault_secret_property\": \"secret-property-1\"},{\"secret_key\": \"example-key-2\",\"vault_secret_key\": \"vault/secret/data/path-2\",\"vault_secret_property\": \"secret-property-2\"}]}' or '' }}",
   "_extensions": [
     "cookiecutter.extensions.SlugifyExtension",
     "cookiecutter.extensions.UUIDExtension",
