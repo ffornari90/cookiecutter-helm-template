@@ -14,7 +14,7 @@
   "deployment_image_repo": "{{ cookiecutter.include_deployment == 'yes' and 'my-repo' or '' }}",
   "deployment_image_tag": "{{ cookiecutter.include_deployment == 'yes' and 'latest' or '' }}",
   "deployment_s3_secret": "{{ cookiecutter.include_deployment == 'yes' and 's3-secrets' or '' }}",
-  "deployment_image_secret": "{{ cookiecutter.include_deployment == 'yes' and 'registry' or '' }}",
+  "deployment_image_secret": "{{ cookiecutter.include_deployment == 'yes' and 'registry-secret' or '' }}",
   "include_service": [
     "yes",
     "no"
@@ -36,8 +36,15 @@
     "no"
   ],
   "external_s3_secret_name": "s3-secrets",
-  "k8s_s3_secret_name": "s3-secrets",  
+  "k8s_s3_secret_name": "s3-secrets",
   "external_s3_secret_data":  "{{ cookiecutter.include_external_s3_secret == 'yes' and '{\"data\":[{\"secret_key\": \"example-key-1\",\"vault_secret_key\": \"vault/secret/data/path-1\",\"vault_secret_property\": \"secret-property-1\"},{\"secret_key\": \"example-key-2\",\"vault_secret_key\": \"vault/secret/data/path-2\",\"vault_secret_property\": \"secret-property-2\"}]}' or '' }}",
+  "include_external_registry_secret": [
+    "yes",
+    "no"
+  ],
+  "external_registry_secret_name": "registry-secret",
+  "k8s_registry_secret_name": "registry-secret",
+  "external_registry_secret_data":  "{{ cookiecutter.include_external_registry_secret == 'yes' and '{\"data\":[{\"secret_key\": \"example-key-1\",\"vault_secret_key\": \"vault/secret/data/path-1\",\"vault_secret_property\": \"secret-property-1\"},{\"secret_key\": \"example-key-2\",\"vault_secret_key\": \"vault/secret/data/path-2\",\"vault_secret_property\": \"secret-property-2\"}]}' or '' }}",
   "_extensions": [
     "cookiecutter.extensions.SlugifyExtension",
     "cookiecutter.extensions.UUIDExtension",

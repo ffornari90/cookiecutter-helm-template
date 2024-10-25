@@ -138,6 +138,25 @@ def update_values_yaml(context):
         }
         values['externalS3Secrets'].append(external_s3_secret)
 
+    # Update external_registry_secrets section if 'include_external_registry_secret' is 'yes'
+    if context.get('include_external_registry_secret') == 'yes':
+        external_registry_secret = {
+            "name": context.get('external_registry_secret_name', 'example-external-registry-secret'),
+            "target": {
+                "name": context.get('k8s_registry_secret_name', 'example-kubernetes-registry-secret')
+            },
+            "data": [
+                {
+                    "secretKey": entry['secret_key'],
+                    "remoteRef": {
+                        "key": entry['vault_secret_key'],
+                        "property": entry['vault_secret_property']
+                    }
+                } for entry in context.get('external_registry_secret_data', {"data":[{"secret_key": "example-key-1","vault_secret_key": "vault/secret/data/path-1","vault_secret_property": "secret-property-1"},{"secret_key": "example-key-2","vault_secret_key": "vault/secret/data/path-2","vault_secret_property": "secret-property-2"}]}).get('data')
+            ]
+        }
+        values['externalRegistrySecrets'].append(external_registry_secret)
+
     # If a dependency chart is needed, populate the chart information
     if context['need_dep_chart'] == 'yes':
         dep_chart = {
